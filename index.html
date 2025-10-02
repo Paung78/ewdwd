@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>TRX Results Hack Ai - Premium Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      color: #fff;
+      padding-top: 50px;
+    }
+    h2 {
+      font-size: 40px;
+      margin-bottom: 30px;
+      color: #ffd700;
+      text-shadow: 0 0 15px #ffd700;
+    }
+    .btn {
+      display: block;
+      margin: 10px 0;
+      padding: 14px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(to right, #ff8c00, #ffd700);
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    }
+    .container {
+      text-align: center;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 30px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      max-width: 450px;
+      width: 90%;
+    }
+    .credit {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #ccc;
+      text-shadow: 0 0 5px #333;
+    }
+    .hidden {
+      display: none;
+    }
+    input[type="password"],
+    input[type="text"] {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+    }
+    #output h3 {
+      margin-top: 20px;
+      font-size: 24px;
+      color: white;
+    }
+    #output span {
+      color: #ffd700;
+      font-weight: bold;
+    }
+    .premium-loader {
+      position: relative;
+      height: 100px;
+      margin: 20px 0;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .premium-loader::before {
+      content: "PREMIUM PROCESSING...";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffd700;
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+      z-index: 2;
+    }
+    .premium-loader::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255, 215, 0, 0.1) 25%, rgba(255, 215, 0, 0.3) 50%, rgba(255, 215, 0, 0.1) 75%);
+      background-size: 400% 400%;
+      animation: premiumLoading 2s ease infinite;
+      border-radius: 20px;
+    }
+    @keyframes premiumLoading {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .result-input {
+      margin-bottom: 15px;
+    }
+    .result-input label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .result-display {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font-size: 18px;
+    }
+    .big {
+      color: #4CAF50;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(76, 175, 80, 0.7);
+    }
+    .small {
+      color: #FF5722;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(255, 87, 34, 0.7);
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .btn-container .btn {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="mainMenu">
+    <h2>TRX Results Hack Ai</h2>
+    <button class="btn" onclick="window.location.href='https://www.cklottery.club/#/register?invitationCode=81487219676'">Register</button>
+    <button class="btn" onclick="window.location.href='https://t.me/colourtradingincome2'">Deposit / Withdraw Video</button>
+    <button class="btn" onclick="window.location.href='https://t.me/PGmoney67800'">Main Channel</button>
+    <button class="btn" onclick="window.location.href='https://t.me/PGhaha369'">Chat Gb</button>
+    <button class="btn" onclick="showPasswordPrompt()">TRX Results Hack</button>
+    <button class="btn" onclick="window.location.href='https://t.me/Paunggyi111'">Key</button>
+    <div class="credit">Credit By Pyaunggyi</div>
+  </div>
+
+  <div class="container hidden" id="passwordPrompt">
+    <h2>Enter Premium Password</h2>
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button class="btn" onclick="checkPassword()">Submit</button>
+  </div>
+
+  <div class="container hidden" id="idInput">
+    <h2>Enter Your ID</h2>
+    <div class="result-input">
+      <label for="userId">ID Number (4-6 digits):</label>
+      <input type="text" id="userId" placeholder="Enter ID" maxlength="6" pattern="\d{4,6}">
+    </div>
+    <button class="btn" onclick="processId()">Continue</button>
+  </div>
+
+  <div class="container hidden" id="resultsInput">
+    <h2>Input Results</h2>
+    <div class="result-input">
+      <label for="result1">Result 1:</label>
+      <input type="text" id="result1" maxlength="1">
+    </div>
+    <div class="result-input">
+      <label for="result2">Result 2:</label>
+      <input type="text" id="result2" maxlength="1">
+    </div>
+    <div class="result-input">
+      <label for="result3">Result 3:</label>
+      <input type="text" id="result3" maxlength="1">
+    </div>
+    <div class="result-input">
+      <label for="result4">Result 4:</label>
+      <input type="text" id="result4" maxlength="1">
+    </div>
+    <div class="result-input">
+      <label for="result5">Result 5:</label>
+      <input type="text" id="result5" maxlength="1">
+    </div>
+    <button class="btn" onclick="calculateResults()">Show Big and Small</button>
+  </div>
+
+  <div class="container hidden" id="resultsOutput">
+    <h2>Result Summary</h2>
+    <div id="output">
+      <h3>Your Results:</h3>
+      <div id="resultNumbers" class="result-display"></div>
+      <div id="bigSmallResult" class="result-display"></div>
+    </div>
+    <div class="premium-loader hidden" id="resultsLoader"></div>
+    <div class="btn-container">
+      <button class="btn" onclick="nextRound()">Next Round</button>
+    </div>
+  </div>
+
+  <script>
+    function showPasswordPrompt() {
+      document.getElementById('mainMenu').classList.add('hidden');
+      document.getElementById('passwordPrompt').classList.remove('hidden');
+    }
+
+    function checkPassword() {
+      const password = document.getElementById('passwordInput').value;
+      if (password === "pp111") {
+        document.getElementById('passwordPrompt').classList.add('hidden');
+        document.getElementById('idInput').classList.remove('hidden');
+      } else {
+        alert("Incorrect password! Please try again.");
+      }
+    }
+
+    function processId() {
+      const userId = document.getElementById('userId').value;
+      if (!/^\d{4,6}$/.test(userId)) {
+        alert("Please enter a valid ID number (4-6 digits)");
+        return;
+      }
+      document.getElementById('idInput').classList.add('hidden');
+      document.getElementById('resultsInput').classList.remove('hidden');
+    }
+
+    function calculateResults() {
+      const result1 = document.getElementById('result1').value;
+      const result2 = document.getElementById('result2').value;
+      const result3 = document.getElementById('result3').value;
+      const result4 = document.getElementById('result4').value;
+      const result5 = document.getElementById('result5').value;
+
+      if (![result1, result2, result3, result4, result5].every(d => /^\d$/.test(d))) {
+        alert("Please enter valid single digits (0-9) for all results");
+        return;
+      }
+
+      document.getElementById('resultsInput').classList.add('hidden');
+      document.getElementById('resultsOutput').classList.remove('hidden');
+      document.getElementById('resultsLoader').classList.remove('hidden');
+
+      document.getElementById('resultNumbers').textContent = `Results: ${result1} ${result2} ${result3} ${result4} ${result5}`;
+
+      setTimeout(() => {
+        document.getElementById('resultsLoader').classList.add('hidden');
+        const firstDigit = parseInt(result1);
+        const bigSmall = firstDigit < 5 ? "SMALL" : "BIG";
+        const resultClass = firstDigit < 5 ? "small" : "big";
+        document.getElementById('bigSmallResult').innerHTML = `<span class="${resultClass}">${bigSmall}</span>`;
+      }, 2000);
+    }
+
+    function nextRound() {
+      ['result1', 'result2', 'result3', 'result4', 'result5'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('resultsOutput').classList.add('hidden');
+      document.getElementById('resultsInput').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
