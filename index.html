@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>TRX Results Hack Ai - Premium Edition</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <style>
     body {
       margin: 0;
@@ -148,6 +151,78 @@
     .btn-container .btn {
       flex: 1;
     }
+    
+    /* HTML 2 Styles */
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #4a6fa5 0%, #2c3e50 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 32px;
+      color: white;
+      box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+      transform: rotate(10deg);
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #7f8c8d;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #2c3e50;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e4e8f0;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #4a6fa5;
+      box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+    }
+    #timer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #7f8c8d;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .success-icon {
+      color: #27ae60;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, #4a6fa5 0%, #2c3e50 100%);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -157,15 +232,43 @@
     <button class="btn" onclick="window.location.href='https://t.me/colourtradingincome2'">Deposit / Withdraw Video</button>
     <button class="btn" onclick="window.location.href='https://t.me/PGmoney67800'">Main Channel</button>
     <button class="btn" onclick="window.location.href='https://t.me/PGhaha369'">Chat Gb</button>
-    <button class="btn" onclick="showPasswordPrompt()">TRX Results Hack</button>
+    <button class="btn" onclick="showKeyPrompt()">TRX Results Hack</button>
     <button class="btn" onclick="window.location.href='https://t.me/Paunggyi111'">Key</button>
     <div class="credit">Credit By Pyaunggyi</div>
   </div>
 
-  <div class="container hidden" id="passwordPrompt">
-    <h2>Enter Premium Password</h2>
-    <input type="password" id="passwordInput" placeholder="Enter Password">
-    <button class="btn" onclick="checkPassword()">Submit</button>
+  <!-- HTML 2 Key Activation System -->
+  <div class="container hidden" id="keyPrompt">
+    <div class="badge">PREMIUM</div>
+    
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-robot"></i>
+      </div>
+      <h1>CK AI PREDICTION</h1>
+      <div class="subtitle">Intelligent Forecast System</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="keyInput">Access Key</label>
+      <input type="text" id="keyInput" placeholder="Enter your premium access key">
+    </div>
+    
+    <button class="btn" onclick="activateKey()">
+      <i class="fas fa-key"></i> ACTIVATE ACCESS
+    </button>
+    
+    <div id="timer"></div>
+    
+    <div id="content" class="hidden">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div style="margin-bottom: 15px; font-weight: 500;">Premium Access Granted!</div>
+      <button class="btn" onclick="showIdInput()" style="background: linear-gradient(135deg, #27ae60 0%, #219653 100%);">
+        <i class="fas fa-chart-line"></i> CONTINUE TO HACK
+      </button>
+    </div>
   </div>
 
   <div class="container hidden" id="idInput">
@@ -216,19 +319,109 @@
   </div>
 
   <script>
-    function showPasswordPrompt() {
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAy3QvFmhKiOX38MZiINfZq2yYXGhb7uL8",
+      authDomain: "ck-adm.firebaseapp.com",
+      databaseURL: "https://ck-adm-default-rtdb.europe-west1.firebasedatabase.app/",
+      projectId: "ck-adm",
+      storageBucket: "ck-adm.appspot.com",
+      messagingSenderId: "192822942347",
+      appId: "1:192822942347:web:f27eee393e16c84544528e"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Global Variables
+    let expireTime = parseInt(localStorage.getItem('expireTime')) || 0;
+    let timerInterval;
+
+    function showKeyPrompt() {
       document.getElementById('mainMenu').classList.add('hidden');
-      document.getElementById('passwordPrompt').classList.remove('hidden');
+      document.getElementById('keyPrompt').classList.remove('hidden');
+      
+      // Check if there's an active session
+      if (expireTime && Date.now() < expireTime) {
+        document.getElementById('content').classList.remove('hidden');
+        startSession();
+      }
     }
 
-    function checkPassword() {
-      const password = document.getElementById('passwordInput').value;
-      if (password === "pp111") {
-        document.getElementById('passwordPrompt').classList.add('hidden');
-        document.getElementById('idInput').classList.remove('hidden');
-      } else {
-        alert("Incorrect password! Please try again.");
+    function activateKey() {
+      const key = document.getElementById('keyInput').value.trim().toUpperCase();
+      if (!key) {
+        alert("Please enter a key");
+        return;
       }
+
+      // Show loading state
+      const btn = document.querySelector('#keyPrompt .btn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> VERIFYING...';
+      btn.disabled = true;
+
+      db.ref('keys/' + key).once('value').then(snapshot => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (data.used) {
+            alert("This key is already used!");
+            return;
+          }
+          
+          const extraTime = data.duration * 60 * 1000;
+          expireTime = Math.max(Date.now(), expireTime) + extraTime;
+          localStorage.setItem('expireTime', expireTime);
+          
+          db.ref('keys/' + key).update({ used: true });
+          
+          // Show success
+          document.getElementById('content').classList.remove('hidden');
+          alert(`Key Activated! Added ${data.duration} minutes`);
+          startSession();
+        } else {
+          alert("Invalid Key");
+        }
+      }).catch(error => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert("Connection error. Please try again.");
+        console.error(error);
+      });
+    }
+
+    function startSession() {
+      if (timerInterval) clearInterval(timerInterval);
+      updateTimer();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      const now = Date.now();
+      const remaining = expireTime - now;
+      
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('timer').textContent = "Premium expired";
+        document.getElementById('content').classList.add('hidden');
+        localStorage.removeItem('expireTime');
+        return;
+      }
+      
+      const hours = Math.floor(remaining / (1000 * 60 * 60));
+      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+      
+      document.getElementById('timer').textContent = `Premium expires in: ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    function showIdInput() {
+      document.getElementById('keyPrompt').classList.add('hidden');
+      document.getElementById('idInput').classList.remove('hidden');
     }
 
     function processId() {
