@@ -3,103 +3,286 @@
 <head>
   <meta charset="UTF-8">
   <title>TRX Results Hack Ai - Premium Edition</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <style>
+    :root {
+      --primary: #00f5ff;
+      --secondary: #ff00e6;
+      --accent: #00ff9d;
+      --dark: #0a0a1a;
+      --darker: #050510;
+      --card-bg: rgba(15, 15, 35, 0.8);
+      --text: #ffffff;
+      --text-secondary: #b0b0d0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
       font-family: 'Poppins', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
-      color: #fff;
-      padding-top: 50px;
+      color: var(--text);
+      padding-top: 30px;
+      overflow-x: hidden;
     }
-    h2 {
-      font-size: 40px;
-      margin-bottom: 30px;
-      color: #ffd700;
-      text-shadow: 0 0 15px #ffd700;
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 230, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 255, 157, 0.05) 0%, transparent 50%);
+      z-index: -1;
     }
-    .btn {
-      display: block;
-      margin: 10px 0;
-      padding: 14px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 50px;
-      background: linear-gradient(to right, #ff8c00, #ffd700);
-      color: #000;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    .glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      z-index: -1;
     }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    
+    .glow-1 {
+      background: var(--primary);
+      top: -100px;
+      left: -100px;
     }
+    
+    .glow-2 {
+      background: var(--secondary);
+      bottom: -100px;
+      right: -100px;
+    }
+    
     .container {
       text-align: center;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 30px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-      max-width: 450px;
+      padding: 40px 30px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 0 20px rgba(0, 245, 255, 0.1);
+      max-width: 480px;
       width: 90%;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+    
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: white;
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    h1, h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+    }
+    
+    h1 {
+      font-size: 36px;
+      letter-spacing: 1px;
+    }
+    
+    h2 {
+      font-size: 28px;
+    }
+    
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0;
+      padding: 16px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: var(--dark);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 245, 255, 0.3);
+    }
+    
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 245, 255, 0.5);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(0, 245, 255, 0.1);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+    }
+    
     .credit {
-      margin-top: 40px;
+      margin-top: 30px;
       font-size: 14px;
-      color: #ccc;
-      text-shadow: 0 0 5px #333;
+      color: var(--text-secondary);
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     }
+    
     .hidden {
       display: none;
     }
+    
     input[type="password"],
     input[type="text"] {
-      padding: 12px;
+      padding: 15px 20px;
       margin: 10px 0;
       width: 100%;
       border: none;
       border-radius: 12px;
       font-size: 16px;
       text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
-    #output h3 {
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    
+    .result-display {
       margin-top: 20px;
-      font-size: 24px;
-      color: white;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    #output span {
-      color: #ffd700;
+    
+    .big {
+      color: var(--accent);
       font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 255, 157, 0.7);
     }
+    
+    .small {
+      color: #ff4d4d;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 77, 77, 0.7);
+    }
+    
     .premium-loader {
       position: relative;
-      height: 100px;
+      height: 120px;
       margin: 20px 0;
       border-radius: 20px;
       overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
+    
     .premium-loader::before {
       content: "PREMIUM PROCESSING...";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       font-size: 18px;
       font-weight: bold;
-      color: #ffd700;
-      text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+      color: var(--primary);
+      text-shadow: 0 0 12px rgba(0, 245, 255, 0.8);
       z-index: 2;
     }
+    
     .premium-loader::after {
       content: "";
       position: absolute;
@@ -107,214 +290,260 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(45deg, rgba(255, 215, 0, 0.1) 25%, rgba(255, 215, 0, 0.3) 50%, rgba(255, 215, 0, 0.1) 75%);
+      background: linear-gradient(45deg, rgba(0, 245, 255, 0.1) 25%, rgba(0, 245, 255, 0.3) 50%, rgba(0, 245, 255, 0.1) 75%);
       background-size: 400% 400%;
       animation: premiumLoading 2s ease infinite;
       border-radius: 20px;
     }
+    
     @keyframes premiumLoading {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    
     .result-input {
-      margin-bottom: 15px;
+      text-align: center;
     }
-    .result-input label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
+    
+    .result-input input {
+      width: 100%;
+      height: 60px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
     }
-    .result-display {
-      margin-top: 20px;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.1);
+    
+    .badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--dark);
+      padding: 6px 15px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+    }
+    
+    .timer {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 10px;
-      font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .big {
-      color: #4CAF50;
-      font-weight: bold;
-      text-shadow: 0 0 8px rgba(76, 175, 80, 0.7);
+    
+    .success-icon {
+      color: var(--accent);
+      font-size: 50px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(0, 255, 157, 0.7);
     }
-    .small {
-      color: #FF5722;
-      font-weight: bold;
-      text-shadow: 0 0 8px rgba(255, 87, 34, 0.7);
+    
+    .pulse {
+      animation: pulse 2s infinite;
     }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
     .btn-container {
       display: flex;
       justify-content: center;
       gap: 10px;
       margin-top: 20px;
     }
+    
     .btn-container .btn {
       flex: 1;
     }
     
-    /* HTML 2 Styles */
-    .header {
-      text-align: center;
-      margin-bottom: 25px;
+    .feature-list {
+      text-align: left;
+      margin: 20px 0;
     }
-    .logo {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #4a6fa5 0%, #2c3e50 100%);
-      border-radius: 20px;
+    
+    .feature-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 0 auto 15px;
-      font-size: 32px;
-      color: white;
-      box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
-      transform: rotate(10deg);
+      margin: 10px 0;
+      color: var(--text-secondary);
     }
-    .subtitle {
-      font-size: 14px;
-      color: #7f8c8d;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 8px;
-      color: #2c3e50;
-    }
-    input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #e4e8f0;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: all 0.2s;
-    }
-    input:focus {
-      outline: none;
-      border-color: #4a6fa5;
-      box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
-    }
-    #timer {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-      color: #7f8c8d;
-      padding: 12px;
-      background: #f8f9fa;
-      border-radius: 8px;
-    }
-    .success-icon {
-      color: #27ae60;
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-    .badge {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: linear-gradient(135deg, #4a6fa5 0%, #2c3e50 100%);
-      color: white;
-      padding: 6px 12px;
-      border-radius: 50px;
-      font-size: 12px;
-      font-weight: 600;
+    
+    .feature-item i {
+      color: var(--accent);
+      margin-right: 10px;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  
   <div class="container" id="mainMenu">
-    <h2>TRX Results Hack Ai</h2>
-    <button class="btn" onclick="window.location.href='https://www.cklottery.club/#/register?invitationCode=81487219676'">Register</button>
-    <button class="btn" onclick="window.location.href='https://t.me/colourtradingincome2'">Deposit / Withdraw Video</button>
-    <button class="btn" onclick="window.location.href='https://t.me/PGmoney67800'">Main Channel</button>
-    <button class="btn" onclick="window.location.href='https://t.me/PGhaha369'">Chat Gb</button>
-    <button class="btn" onclick="showKeyPrompt()">TRX Results Hack</button>
-    <button class="btn" onclick="window.location.href='https://t.me/Paunggyi111'">Key</button>
-    <div class="credit">Credit By Pyaunggyi</div>
+    <div class="logo">
+      <i class="fas fa-robot"></i>
+    </div>
+    <h1>TRX RESULTS HACK AI</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 25px;">Premium Prediction System</p>
+    
+    <button class="btn" onclick="window.location.href='https://www.cklottery.club/#/register?invitationCode=81487219676'">
+      <i class="fas fa-user-plus"></i> Register
+    </button>
+    <button class="btn" onclick="window.location.href='https://t.me/colourtradingincome2'">
+      <i class="fas fa-video"></i> Deposit / Withdraw Video
+    </button>
+    <button class="btn" onclick="window.location.href='https://t.me/PGmoney67800'">
+      <i class="fas fa-broadcast-tower"></i> Main Channel
+    </button>
+    <button class="btn" onclick="window.location.href='https://t.me/PGhaha369'">
+      <i class="fas fa-comments"></i> Chat Group
+    </button>
+    <button class="btn btn-secondary pulse" onclick="showKeyPrompt()">
+      <i class="fas fa-key"></i> TRX Results Hack
+    </button>
+    <button class="btn" onclick="window.location.href='https://t.me/Paunggyi111'">
+      <i class="fas fa-key"></i> Get Premium Key
+    </button>
+    
+    <div class="feature-list">
+      <div class="feature-item">
+        <i class="fas fa-check-circle"></i>
+        <span>AI-Powered Predictions</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-check-circle"></i>
+        <span>Real-time Analysis</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-check-circle"></i>
+        <span>Premium Algorithms</span>
+      </div>
+    </div>
+    
+    <div class="credit">CREDITS BY PYAUNGGYI</div>
   </div>
 
-  <!-- HTML 2 Key Activation System -->
+  <!-- Key Activation System -->
   <div class="container hidden" id="keyPrompt">
     <div class="badge">PREMIUM</div>
     
-    <div class="header">
-      <div class="logo">
-        <i class="fas fa-robot"></i>
-      </div>
-      <h1>CK AI PREDICTION</h1>
-      <div class="subtitle">Intelligent Forecast System</div>
+    <div class="logo">
+      <i class="fas fa-lock"></i>
     </div>
+    <h2>PREMIUM ACCESS</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 25px;">Enter your premium key to unlock AI predictions</p>
     
-    <div class="form-group">
-      <label for="keyInput">Access Key</label>
+    <div class="input-group">
+      <label for="keyInput"><i class="fas fa-key"></i> ACCESS KEY</label>
       <input type="text" id="keyInput" placeholder="Enter your premium access key">
     </div>
     
     <button class="btn" onclick="activateKey()">
-      <i class="fas fa-key"></i> ACTIVATE ACCESS
+      <i class="fas fa-unlock"></i> ACTIVATE PREMIUM
     </button>
     
-    <div id="timer"></div>
+    <div class="timer" id="timer"></div>
     
     <div id="content" class="hidden">
       <div class="success-icon">
         <i class="fas fa-check-circle"></i>
       </div>
-      <div style="margin-bottom: 15px; font-weight: 500;">Premium Access Granted!</div>
-      <button class="btn" onclick="showIdInput()" style="background: linear-gradient(135deg, #27ae60 0%, #219653 100%);">
-        <i class="fas fa-chart-line"></i> CONTINUE TO HACK
+      <h3>PREMIUM ACTIVATED!</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">You now have access to the AI prediction system</p>
+      <button class="btn" onclick="showIdInput()">
+        <i class="fas fa-rocket"></i> CONTINUE TO PREDICTIONS
       </button>
     </div>
   </div>
 
+  <!-- ID Input -->
   <div class="container hidden" id="idInput">
-    <h2>Enter Your ID</h2>
-    <div class="result-input">
-      <label for="userId">ID Number (4-6 digits):</label>
-      <input type="text" id="userId" placeholder="Enter ID" maxlength="6" pattern="\d{4,6}">
+    <div class="logo">
+      <i class="fas fa-id-card"></i>
     </div>
-    <button class="btn" onclick="processId()">Continue</button>
+    <h2>ENTER YOUR ID</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 25px;">Please provide your account ID to continue</p>
+    
+    <div class="input-group">
+      <label for="userId"><i class="fas fa-user"></i> ID NUMBER</label>
+      <input type="text" id="userId" placeholder="Enter ID (4-6 digits)" maxlength="6" pattern="\d{4,6}">
+    </div>
+    
+    <button class="btn" onclick="processId()">
+      <i class="fas fa-arrow-right"></i> CONTINUE
+    </button>
   </div>
 
+  <!-- Results Input -->
   <div class="container hidden" id="resultsInput">
-    <h2>Input Results</h2>
-    <div class="result-input">
-      <label for="result1">Result 1:</label>
-      <input type="text" id="result1" maxlength="1">
+    <div class="logo">
+      <i class="fas fa-chart-bar"></i>
     </div>
-    <div class="result-input">
-      <label for="result2">Result 2:</label>
-      <input type="text" id="result2" maxlength="1">
+    <h2>INPUT RESULTS</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 25px;">Enter the latest 5 results for analysis</p>
+    
+    <div class="results-grid">
+      <div class="result-input">
+        <input type="text" id="result1" maxlength="1" placeholder="0">
+      </div>
+      <div class="result-input">
+        <input type="text" id="result2" maxlength="1" placeholder="0">
+      </div>
+      <div class="result-input">
+        <input type="text" id="result3" maxlength="1" placeholder="0">
+      </div>
+      <div class="result-input">
+        <input type="text" id="result4" maxlength="1" placeholder="0">
+      </div>
+      <div class="result-input">
+        <input type="text" id="result5" maxlength="1" placeholder="0">
+      </div>
     </div>
-    <div class="result-input">
-      <label for="result3">Result 3:</label>
-      <input type="text" id="result3" maxlength="1">
-    </div>
-    <div class="result-input">
-      <label for="result4">Result 4:</label>
-      <input type="text" id="result4" maxlength="1">
-    </div>
-    <div class="result-input">
-      <label for="result5">Result 5:</label>
-      <input type="text" id="result5" maxlength="1">
-    </div>
-    <button class="btn" onclick="calculateResults()">Show Big and Small</button>
+    
+    <button class="btn" onclick="calculateResults()">
+      <i class="fas fa-calculator"></i> ANALYZE RESULTS
+    </button>
   </div>
 
+  <!-- Results Output -->
   <div class="container hidden" id="resultsOutput">
-    <h2>Result Summary</h2>
-    <div id="output">
-      <h3>Your Results:</h3>
-      <div id="resultNumbers" class="result-display"></div>
-      <div id="bigSmallResult" class="result-display"></div>
+    <div class="logo">
+      <i class="fas fa-chart-line"></i>
     </div>
+    <h2>PREDICTION RESULT</h2>
+    
+    <div id="output">
+      <div class="result-display" id="resultNumbers">
+        Results will appear here
+      </div>
+      <div class="result-display" id="bigSmallResult">
+        Prediction will appear here
+      </div>
+    </div>
+    
     <div class="premium-loader hidden" id="resultsLoader"></div>
+    
     <div class="btn-container">
-      <button class="btn" onclick="nextRound()">Next Round</button>
+      <button class="btn btn-secondary" onclick="nextRound()">
+        <i class="fas fa-redo"></i> NEXT ROUND
+      </button>
     </div>
   </div>
 
